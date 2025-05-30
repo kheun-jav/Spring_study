@@ -1,0 +1,33 @@
+package ex01_Lombok;
+
+
+public class ex02_User {
+	private String id;
+	private String pw;
+	
+	public Exo2_User(Builder builder) {
+		this.id = builder.id;
+		this.pw = builder.pw;
+	}
+	public static Builder builder() {
+		return new Builder();
+	}
+	public String toString() {
+		return "user [id="+id+", pw="+pw+"]";
+	}
+	public static class Builder {
+		private String id;
+		private String pw;
+		public Builder id(String id) {
+			this.id = id;
+			return this;
+		}
+		public Builder pw(String pw) {
+			this.pw = pw;
+			return this;
+		}
+		public Ex02_User build() {
+			return new Ex02_User(this);
+		}
+	}
+}

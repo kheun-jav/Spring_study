@@ -1,0 +1,6 @@
+package ex01_Lombok;
+
+public class Ex03_User {
+	private String id;
+	private String pw;
+}

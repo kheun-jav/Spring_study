@@ -1,0 +1,10 @@
+package kr.gdj90.ex02_maven;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan(basePackages = {"kr.gdj90.ex02_maven"})
+public class AppCtx {
+
+}

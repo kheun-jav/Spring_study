@@ -1,0 +1,10 @@
+package kr.gdj90.ex02_maven;
+
+import org.springframework.stereotype.Component;
+
+@Component //현재 클래스를 객체화.
+public class Worker {
+	public void work(WorkUnit unit) {
+		System.out.println(this + ":work:" + unit);
+	}
+}

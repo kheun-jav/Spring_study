@@ -1,0 +1,15 @@
+package kr.gdj90.ex02_maven;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class Main1 {
+	public static void main(String[] args) {
+		//ApplicationContext : 컨테이너. 객체들을 저장하고 있는 공간
+		ApplicationContext ctx =
+				new AnnotationConfigApplicationContext(AppCtx.class); //@Component로 저장한 모든 객체를 담고있는 AppContext 객체 선언
+		Executor exec = ctx.getBean("executor", Executor.class);
+		exec.addUnit(new WorkUnit());
+		exec.addUnit(new WorkUnit());
+	}
+}

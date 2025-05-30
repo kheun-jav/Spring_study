@@ -1,0 +1,10 @@
+package ex01_Lombok;
+
+public class ex01_Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

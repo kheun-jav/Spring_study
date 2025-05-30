@@ -1,0 +1,8 @@
+package kr.gdj90.ex02_maven;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppCtx {
+
+}

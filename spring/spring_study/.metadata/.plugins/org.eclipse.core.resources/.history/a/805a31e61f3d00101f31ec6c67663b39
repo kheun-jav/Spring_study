@@ -1,0 +1,6 @@
+package annotation;
+
+public class ReadArticleService {
+	Article getArticleAndReadCnt(int id) throws Exception;
+
+}

@@ -1,0 +1,10 @@
+package annotation;
+
+public class ReadArticleServiceImpl implements ReadArticleService{
+	@Override
+	public Article getArticleAndReadCnt(int id) throws Exception {
+		System.out.println("getArticleAndReadCnt("+id+")");
+		return null;
+	}
+	
+}

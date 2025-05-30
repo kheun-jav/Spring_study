@@ -1,0 +1,16 @@
+package ex01_Lombok;
+
+import jdk.jshell.JShell.Builder;
+
+public class ex02_User {
+	private String id;
+	private String pw;
+	
+	public User(Builder builder) {
+		this.id = builder.id;
+		this.pw = builder.pw;
+	}
+	public static Builder builder() {
+		return new Builder();
+	}
+}

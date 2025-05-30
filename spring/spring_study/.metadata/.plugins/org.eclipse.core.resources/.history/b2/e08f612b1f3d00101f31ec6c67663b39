@@ -1,0 +1,10 @@
+package annotation;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class MemberService {
+	public void regist(Member member) {
+		System.out.println(MemberService.regist(Member));
+	}
+}

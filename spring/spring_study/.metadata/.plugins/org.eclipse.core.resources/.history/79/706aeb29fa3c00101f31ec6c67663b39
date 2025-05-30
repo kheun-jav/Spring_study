@@ -1,0 +1,10 @@
+package ex01_Lombok;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Ex01_User {
+	private String id;
+}

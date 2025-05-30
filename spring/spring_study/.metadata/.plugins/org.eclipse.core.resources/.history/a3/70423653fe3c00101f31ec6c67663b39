@@ -1,0 +1,8 @@
+package ex01_Lombok;
+
+public class Ex02_Main {
+
+	public static void main(String[] args) {
+	}
+
+}

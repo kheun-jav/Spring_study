@@ -1,0 +1,10 @@
+package main;
+
+import config.AppCtx;
+
+public class Main1 {
+	public static void main(String[] args) {
+		ApplicationContext ctx =new AnnotationConfigApplicationContext(AppCtx.class);
+	}
+
+}

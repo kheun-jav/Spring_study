@@ -1,0 +1,13 @@
+package ex01_Lombok;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.ToString;
+
+@ToString
+@Builder
+@AllArgsConstructor
+public class Ex03_User {
+	private String id;
+	private String pw;
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;kr.gdj90.ex02_maven.Excutor&apos; to &apos;Executor&apos;&#x0D;&#x0A;- Original project: &apos;ex02_maven&apos;&#x0D;&#x0A;- Original element: &apos;kr.gdj90.ex02_maven.Excutor&apos;&#x0D;&#x0A;- Renamed element: &apos;kr.gdj90.ex02_maven.Executor&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Excutor&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;kr.gdj90.ex02_maven{Excutor.java[Excutor" matchStrategy="1" name="Executor" qualified="false" references="true" similarDeclarations="false" stamp="1748581551117" textual="false" version="1.0"/>
+</session>

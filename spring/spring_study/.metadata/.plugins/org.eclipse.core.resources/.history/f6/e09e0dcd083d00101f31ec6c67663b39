@@ -1,0 +1,6 @@
+package kr.gdj90.ex02_maven;
+
+@Config
+public class AppCtx {
+
+}

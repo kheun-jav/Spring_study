@@ -1,0 +1,5 @@
+package ex01_Lombok;
+
+public class Ex01_User {
+
+}

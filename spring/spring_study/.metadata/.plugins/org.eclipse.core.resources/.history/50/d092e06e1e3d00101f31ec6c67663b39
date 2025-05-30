@@ -1,0 +1,12 @@
+package config;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration //spring 환경 설정하는 클래스
+@ComponentScan(basePackages= {"annotation"})
+@EnableAspectJAutoProxy
+public class AppCtx {
+
+}
