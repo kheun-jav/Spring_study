@@ -3,8 +3,6 @@ Lombok
 사용하고자하는 이클립스 project에 buildpath -> classpath에 Lombok.jar 파일 추가
 만약 import가 되지 않는다면 module-info 파일의 내용을 전부 삭제
 
-@Data : 생성자를 뺸 getter, setter, toString 함수 호출 
-
 Maven : jar 파일을 관리할 수 있는 도구
 
 Maven 레파지토리 주소
