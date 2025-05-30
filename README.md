@@ -6,6 +6,8 @@ Lombok
 @Data : 생성자를 뺸 getter, setter, toString 함수 호출 
 
 Maven : jar 파일을 관리할 수 있는 도구
+
+Maven 레파지토리 주소
+https://mvnrepository.com/
 Maben 사이트에서 라이브러리 의존성 코드를 복사하여
 pom.xml에 주입하면 해당 라이브러리의 jar파일을 직접 붙여쓰지 않아도 import할 수 있다.
-
