@@ -1,18 +1,24 @@
-Lombok
-다운받은 Lombok.jar 파일을 클릭하여 <install/Update> 버튼을 클릭
-사용하고자하는 이클립스 project에 buildpath -> classpath에 Lombok.jar 파일 추가
-만약 import가 되지 않는다면 module-info 파일의 내용을 전부 삭제
+# Java Web Project 설정 가이드
 
-Maven : jar 파일을 관리할 수 있는 도구
+## ✅ Lombok 설치 및 설정
 
-Maven 레파지토리 주소
-https://mvnrepository.com/
-Maben 사이트에서 라이브러리 의존성 코드를 복사하여
-pom.xml에 주입하면 해당 라이브러리의 jar파일을 직접 붙여쓰지 않아도 import할 수 있다.
+1. [Lombok 공식 사이트](https://projectlombok.org/download)에서 `lombok.jar` 다운로드
+2. 다운로드한 `lombok.jar` 실행 (더블클릭) → `<Install/Update>` 버튼 클릭
+3. Eclipse에서 해당 프로젝트 `build path > classpath`에 `lombok.jar` 추가
+4. 만약 Lombok import가 되지 않는다면 `module-info.java` 파일의 내용을 모두 삭제
 
-spring을 사용한 webproject 생성시 web.xml에 대한 수정이 필요하다.
-`<?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
- xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
- xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
- id="WebApp_ID" version="4.0">`
+## ✅ Maven 이란?
+
+- **Maven**은 jar 파일(라이브러리)을 관리하는 도구입니다.
+- 라이브러리를 직접 다운받을 필요 없이 `pom.xml`에 의존성을 추가하면 자동으로 다운로드 및 관리해줍니다.
+- 라이브러리는 [https://mvnrepository.com/](https://mvnrepository.com/)에서 검색 후 사용
+
+### 🔧 예시: Lombok Maven 설정
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.30</version>
+    <scope>provided</scope>
+</dependency>
