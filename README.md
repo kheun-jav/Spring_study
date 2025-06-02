@@ -11,8 +11,8 @@ Maben 사이트에서 라이브러리 의존성 코드를 복사하여
 pom.xml에 주입하면 해당 라이브러리의 jar파일을 직접 붙여쓰지 않아도 import할 수 있다.
 
 spring을 사용한 webproject 생성시 web.xml에 대한 수정이 필요하다.
-<?xml version="1.0" encoding="UTF-8"?>
+`<?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
  xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
- id="WebApp_ID" version="4.0">
+ id="WebApp_ID" version="4.0">`
