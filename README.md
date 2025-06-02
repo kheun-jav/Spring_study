@@ -22,3 +22,18 @@
     <version>1.18.30</version>
     <scope>provided</scope>
 </dependency>
+```
+
+## ✅ Spring 기반 Maven Web Project: web.xml 설정
+
+Spring 기반의 Maven Web Project를 사용할 때는 `web.xml`의 헤더 부분을 다음과 같이 수정해야 합니다.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
+         id="WebApp_ID" version="4.0">
+    <!-- 설정 내용 -->
+</web-app>
