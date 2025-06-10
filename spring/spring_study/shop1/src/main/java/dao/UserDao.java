@@ -52,7 +52,7 @@ public class UserDao {
 		param.put("email", user.getEmail()); //id/pw 공통부분 먼저 put
 		param.put("phoneno", user.getPhoneno()); //id/pw 공통부분 먼저 put
 		
-		if(user.getUserid() != null) { //userid가 null이면 비밀번호 초기화
+		if(user.getUserid() != null) { //userid가 null이 아니면 비밀번호 초기화
 			String randpw = getTempPw(); //임시비밀번호 6자리	
 			param.put("randpw", randpw); //map에 put
 			param.put("userid",user.getUserid()); //userid도 put
@@ -65,10 +65,11 @@ public class UserDao {
 	}
 	
 	//비밀번호초기화알고리즘
-	public  String getTempPw() {
+	public String getTempPw() {
 		List<String> lowerList = Arrays.asList //lower(소문자) 리스트 생성
 				("a" ,"b" ,"c" ,"d" ,"e" ,"f" ,"g" ,"h" ,"i" ,"j" ,"k"
-						,"l" ,"m" ,"n" ,"o" ,"p","q","r","s","t","z");
+						,"l" ,"m" ,"n" ,"o" ,"p","q","r","s","t","u",
+						"v", "w", "x", "y","z");
 		List<String> upperList = new ArrayList<>(); //upper(대문자)를 추가할 리스트 생성
 		for (String string : lowerList) { //lowerList의 요소를 toUpperCase()로 대문자로 변경하여 upperList에 추가
 			upperList.add(string.toUpperCase());
@@ -91,5 +92,8 @@ public class UserDao {
 		}
 		//임시 비밀번호 반환
 		return tempNum;
+	}
+	public List<User> list() {
+		return template.getMapper(cls).list();
 	}
 }

@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>mypage</title>
 <script type="text/javascript" 
-src="https://ajax.googlepais.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 </script>
 <script type="text/javascript">
 	$(function(){
@@ -31,7 +31,7 @@ src="https://ajax.googlepais.com/ajax/libs/jquery/3.5.1/jquery.min.js">
 		$("#"+tab).addClass("select")
 	}
 	function list_disp(id) {
-		$("#"+id).toggle()
+		$("#"+id).toggle() //show인 경우 hide, hide인 경우 show
 	}
 </script>
 <style type="text/css">
@@ -58,7 +58,7 @@ src="https://ajax.googlepais.com/ajax/libs/jquery/3.5.1/jquery.min.js">
   <td align="center"><fmt:formatDate value="${sale.saledate}"
   			pattern="yyyy-MM-dd" /></td>
   <td align="right">
-  <fmt:formatNumber value="${sale.totlal}" pattern="###,###" />원</td></tr>
+  <fmt:formatNumber value="${sale.total}" pattern="###,###" />원</td></tr>
  <tr id="saleLine${stat.index}" class="saleLine">
   <td colspan="3" align="center">
   <table><tr><th>상품명</th><th>상품가격</th><th>주문수량</th><th>상품총액</th></tr>

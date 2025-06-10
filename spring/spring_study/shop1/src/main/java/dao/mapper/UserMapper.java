@@ -36,12 +36,18 @@ public interface UserMapper {
 	@Update("update useraccount set password=#{chgpass} where userid=#{userid}")
 	void chgpass(@Param("userid") String userid, @Param("chgpass") String chgpass);
 
-	@Select("select ${col} from useraccount "
-		+ "where email=#{email} and phoneno=#{phoneno}")
+	@Select({"<script>",
+			"select ${col} from useraccount "
+		+ "where email=#{email} and phoneno=#{phoneno}"
+		+ " <if test='userid != null'> and userid=#{userid}</if>"
+		+ "</script>"})
 	String searchId(Map<String, Object> param);
 
 	@Update("update useraccount set password=#{randpw}"
 			+ " where userid=#{userid} and email=#{email} and phoneno=#{phoneno}")
 	void resetPw(Map<String, Object> param);
+
+	@Select("select * from useraccount where userid != 'admin'")
+	List<User> list();
 
 }

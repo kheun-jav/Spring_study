@@ -9,6 +9,14 @@ public class Cart {
 		return itemSetList;
 	}
 	public void push(ItemSet itemSet) {
+		int count = itemSet.getQuantity();
+		for(ItemSet old : itemSetList) {
+			if(itemSet.getItem().getId() == old.getItem().getId()) {
+				count = old.getQuantity() + itemSet.getQuantity();
+				old.setQuantity(count);
+				return;
+			}
+		}
 		itemSetList.add(itemSet);
 	}
 	public int getTotal() { //get프로퍼티 : total 프로퍼티
