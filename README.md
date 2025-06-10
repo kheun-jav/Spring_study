@@ -37,3 +37,17 @@ Spring 기반의 Maven Web Project를 사용할 때는 `web.xml`의 헤더 부�
          id="WebApp_ID" version="4.0">
     <!-- 설정 내용 -->
 </web-app>
+```
+
+## ✅ Exception.jsp 설정시 유의사항
+
+Spring Legacy 프로젝트 Exception.jsp 설정시 isErrorPage="true" 설정을 해야 합니다.
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isErrorPage="true" %>
+<script>
+	alert("${exception.message}");
+	location.href="${exception.url}";
+</script>
+
