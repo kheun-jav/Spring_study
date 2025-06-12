@@ -1,21 +1,21 @@
-package aop;
+package kr.gdu.aop;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import exception.ShopException;
-import logic.User;
+import kr.gdu.exception.ShopException;
+import kr.gdu.logic.User;
 
 @Component
 @Aspect
 public class AdminLoginAspect {
 	@Around
 	//joinPoint : controller 패키지에 admin으로 시작하는 클래스의 admincheck로 시작하는 메서드 && 매개변수로 session을 무조건 가지고 있어야함
-	("execution(* controller.Admin*.adminCheck*(..)) && args(..,session)")
+	("execution(* kr.gdu.controller.Admin*.adminCheck*(..)) && args(..,session)")
 		public Object AdminIdCheck
 				(ProceedingJoinPoint joinPoint, HttpSession session) throws Throwable {
 		User loginUser = (User)session.getAttribute("loginUser");
