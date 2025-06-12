@@ -50,6 +50,7 @@ Spring Legacy 프로젝트 Exception.jsp 설정시 isErrorPage="true" 설정을 
 	alert("${exception.message}");
 	location.href="${exception.url}";
 </script>
+```
 
 ## ✅ 실행 환경
 
