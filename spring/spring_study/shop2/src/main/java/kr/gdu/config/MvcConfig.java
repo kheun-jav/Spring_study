@@ -16,12 +16,15 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.zaxxer.hikari.HikariDataSource;
+
+import kr.gdu.interceptor.BoardInterceptor;
 
 @Configuration
 @EnableAspectJAutoProxy //AOP 사용을 위한 설정
@@ -58,5 +61,13 @@ public class MvcConfig implements WebMvcConfigurer {
 		return properties.initializeDataSourceBuilder().type
 				(HikariDataSource.class).build(); //Connection POOL 객체
 	}
-	
+	//인터셉터관련 설정
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new BoardInterceptor())
+		.addPathPatterns("/board/write") //요청 url 정보
+		.addPathPatterns("/board/update")
+		.addPathPatterns("/board/delete");
+		
+	}
 }
