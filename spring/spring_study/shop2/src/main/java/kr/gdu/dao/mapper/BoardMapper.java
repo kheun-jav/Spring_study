@@ -57,6 +57,23 @@ public interface BoardMapper {
 	@Update("update board set grpstep=grpstep+1"
 			+" where grp = #{grp} and grpstep > #{grpstep}")
 	void grpStepAdd(int grp, int grpstep);
+/*
+ * [{writer="홍길동", cnt:10},{writer="김삿갓", cnt:7},...]
+ *  => [{홍길동=10}, {김삿갓=7},...] 형식으로 브라우저에 전달
+ */
+	
+	@Select("select writer, count(*) cnt from board where boardid=#{value} "
+			+ " group by writer order by 2 desc limit 0,7")
+	List<Map<String, Object>> graph1(String id);
+
+			
+	@Select("select date_format(regdate,'%Y-%m-%d') day, count(*) cnt "
+			+ "from board "
+			+ "where boardid=#{value} "
+			+ " group by date_format(regdate,'%Y-%m-%d')"
+			+ " order by 2 desc limit 0,7")
+	List<Map<String, Object>> graph2(String id);
+
 
 	
 	

@@ -19,7 +19,7 @@
 </head>
 <body>
 <h2>회원목록</h2>
-<form action="mailForm" method="post">
+<form action="mail">
   <table class="w3-table-all">
   <tr><th>아이디</th>
       <th>이름</th>

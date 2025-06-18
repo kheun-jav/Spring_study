@@ -24,6 +24,10 @@ public interface UserMapper {
 	@Select({"<script>",
 		"select * from useraccount",
 		"<if test='userid != null'> where userid=#{userid}</if>",
+		"<if test='userids != null'>where userid in"
+		+ "<foreach collection='userids' item='id' separator=',' "
+		+ "open='(' close=')'>#{id}"
+		+ "</foreach></if>",
 		"</script>"})
 	List<User> select(Map<String,Object> param);
 

@@ -254,13 +254,19 @@ public class BoardController {
 	public ModelAndView comment(@Valid Comment comm, BindingResult bresult) {
 		ModelAndView mav = new ModelAndView("board/detail");
 		if(bresult.hasErrors()) {
-			return mav;
+			return commdetail(comm);
 		}
 		//comment 테이블의 기본키값: num,seq
 		int seq = service.commaxseq(comm.getNum()); //num 게시글 중 최대 seq값
 		comm.setSeq(++seq);
 		service.comminsert(comm); //comment 테이블에 추가
 		mav.setViewName("redirect:detail?num="+comm.getNum()+"#comment");
+		return mav;
+	}
+	private ModelAndView commdetail(Comment comm) {
+		ModelAndView mav = detail(comm.getNum()); //조회수가 증가됨. 수정 필요
+		//comm : @Valid 완료한 객체. 오류 정보 저장
+		mav.addObject(comm);
 		return mav;
 	}
 	

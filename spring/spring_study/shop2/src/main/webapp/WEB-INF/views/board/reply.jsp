@@ -28,13 +28,46 @@
    	 <tr><td>제목</td><td><form:input path="title" value="RE:${board.title}"/>
    	   <font color="red"><form:errors path="title"/></font>
    	 </td></tr>
-   	 <tr><td>내용</td>
-   	     <td><textarea name="content" rows="15" cols="80"></textarea>
-   	     <font color="red"><form:errors path="content"/></font>
-   	 </td></tr>
+   <tr><td>내용</td><td><form:textarea path="content" rows="15" cols="80"
+   				id="summernote"/>
+   <font color="red"><form:errors path="content"/></font>
+   </td></tr>
    	 <tr><td colspan="2">
    	   <a href="javascript:document.f.submit()">[답변글등록]</a></td></tr>
    </table>
    </form:form>
+<script type="text/javascript">
+	$(function(){
+		$("#summernote").summernote({
+			height:300,	
+			callbacks : {
+				onImageUpload : function(images) {
+					for(let i=0; i < images.length; i++) {
+						sendFile(images[i])
+					}
+				}
+			}
+		})
+	})
+	function sendFile(file) {
+		//파일 업로드를 위한 데이터 컨테이너 생성
+		let data = new FormData();
+		data.append("image", file); // 컨테이너에 이미지 객체 추가
+		
+		$.ajax({ //ajax를 이용하여 파일 업로드
+			url : "/ajax/uploadImage", //서버 요청 url
+			type : "post",			   //post 방식으로 요청
+			data : data,			   //전송 데이터
+			processData : false,	   //문자열 전송 아님. 파일 업로드시 사용
+			contentType : false,	   //컨덴트 타입 자동 설정 안함. 파일 업로드시 사용
+			success : function(src) {  //서버 응답 완료. 정상 처리
+				$("#summernote").summernote("insertImage", src);
+			},
+			error : function(e) {
+				alert("이미지 업로드 실패:"+e.status);
+			}
+		})
+	}
+</script>
 </body>
 </html>
