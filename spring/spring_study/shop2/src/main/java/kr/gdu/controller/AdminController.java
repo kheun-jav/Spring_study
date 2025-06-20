@@ -33,7 +33,7 @@ public class AdminController {
 	}
 	//메일 폼
 	@GetMapping("mail")
-	public ModelAndView mailform(String[] idchks, HttpSession session) {
+	public ModelAndView adminCheckmailform(String[] idchks, HttpSession session) {
 		ModelAndView mav = new ModelAndView("admin/mail");
 		if(idchks == null || idchks.length == 0) {
 			throw new ShopException("메일을 보낼 대상자를 선택하세요", "list");
@@ -66,6 +66,8 @@ public class AdminController {
 			mav.addObject("message","메일 전송을 실패 했습니다.");			
 		}
 		mav.addObject("url", "list");
+		//첨부 파일 제거하기
+		service.mailfileDelete(mail);
 		return mav;
 	}
 	

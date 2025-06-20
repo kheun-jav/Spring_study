@@ -46,6 +46,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <a href="${path}/user/mypage?userid=${sessionScope.loginUser.userid}" class="w3-bar-item w3-button w3-theme-l1"><div id="mainlogo"></div></a>
     <a href="${path}/item/list" class="w3-bar-item w3-button w3-hide-small w3-hover-white">상품 등록/구매</a>
     <a href="${path}/cart/cartView" class="w3-bar-item w3-button w3-hide-small w3-hover-white">나의 장바구니</a>
+	<a href="${path}/chat/chat" class="w3-bar-item w3-button w3-hide-small w3-hover-white">채팅</a>
   </div>
   </div>
 </div>

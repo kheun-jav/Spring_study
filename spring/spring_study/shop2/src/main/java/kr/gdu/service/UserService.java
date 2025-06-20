@@ -88,47 +88,57 @@ public class UserService {
 			e.printStackTrace();
 		}
 		//구글아이디@gmail.com
-		//passwd : 앱비밀번호
-		MyAuthenticator auth = 
+		//passwd : 앱비밀번호 : ktyq wdua lvtj jwhq
+		MyAuthenticator auth = //인증객체
 			new MyAuthenticator(sender, mail.getGooglepw());
+		//session : 메일 서버에 접속 객체
 		Session session = Session.getInstance(prop,auth);
+		//msg : 이메일 전송 내용 전체
 		MimeMessage msg = new MimeMessage(session);
 		try {
+			//보내는 이메일 설정
 			msg.setFrom(new InternetAddress(sender));
 			List<InternetAddress> addrs = new ArrayList<InternetAddress>();
+			//emails : [받는사람이름<이메일주소>,...]
 			String[] emails = mail.getRecipient().split(",");
 			for(String email : emails) {
 				addrs.add(new InternetAddress(email));
 			}
+			//arr : 수신이메일 목록
 			InternetAddress[] arr = new InternetAddress[emails.length];
 			for(int i=0; i<addrs.size(); i++) {
 				arr[i]=addrs.get(i);
 			}
 			msg.setRecipients(Message.RecipientType.TO, arr);
-			msg.setSentDate(new Date());
-			msg.setSubject(mail.getTitle());
+			msg.setSentDate(new Date()); //전송 일자
+			msg.setSubject(mail.getTitle()); //제목
+			//내용, 첨부파일들 저장
 			MimeMultipart multipart = new MimeMultipart();
+			//내용part
 			MimeBodyPart message = new MimeBodyPart();
 			message.setContent(mail.getContents(), mail.getMtype());
-			multipart.addBodyPart(message);
+			multipart.addBodyPart(message); //내용 추가
+			//첨부파일 설정
+			//List<MultipartFile> getFile1()
 			for(MultipartFile mf : mail.getFile1()) {
-				if((mf != null) && (!mf.isEmpty())) {
-					multipart.addBodyPart(bodyPart(mf));
+				//mf : 첨부파일 1개
+				if((mf != null) && (!mf.isEmpty())) { //첨부된 내용 존재
+					multipart.addBodyPart(bodyPart(mf)); //첨부파일 추가
 				}
 			}
 			msg.setContent(multipart);
-			Transport.send(msg);
+			Transport.send(msg); //메일 전송
 			return true;
 		} catch(MessagingException me) {
 			me.printStackTrace();
 		}
 		return false;
 	}
-	//
 	private BodyPart bodyPart(MultipartFile mf) {
+		//mf : 파일 한개
 		MimeBodyPart body = new MimeBodyPart();
 		String orgFile = mf.getOriginalFilename();
-		String path = RESOURCE_DIR + "mailupload/";
+		String path = RESOURCE_DIR + "mailupload/"; //업로드되는 폴더 
 		File f1 = new File(path);
 		if(!f1.exists()) f1.mkdirs();
 		File f2 = new File(path + orgFile);
@@ -140,6 +150,19 @@ public class UserService {
 			e.printStackTrace();
 		}
 		return body;
+	}
+	//첨부파일 삭제
+	public void mailfileDelete(Mail mail) {
+		String path = RESOURCE_DIR + "mailupload/";
+		List<String> filenames = new ArrayList<>();
+		for(MultipartFile mf : mail.getFile1()) {
+			filenames.add(mf.getOriginalFilename());
+		}
+		for(String f : filenames) {
+			File df = new File(path,f);
+			df.delete();
+		}
+		
 	}
 	
 }
