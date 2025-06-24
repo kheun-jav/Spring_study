@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout (title, content, style)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="'gdj90 | ' + ${title}">구디 농수산물 직판</title>
+
+    <!-- 스타일시트 및 스크립트 -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
+    <style>
+        html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+        .w3-sidebar {
+            z-index: 3;
+            width: 250px;
+            top: 43px;
+            bottom: 0;
+            height: inherit;
+        }
+    </style>
+ <!-- 타임리프식 스타일 설정 -->
+    <style th:replace="${style} ? ${style} : _"></style>
+</head>
+
+<body>
+<!-- 네비게이션 -->
+<div class="w3-top">
+    <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+        <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-l1"
+           href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+        <th:block th:if="${session.loginUser != null}">
+	    <a th:href="@{/user/mypage(userid=${session.loginUser.userid})}" 
+	    class="w3-bar-item w3-button w3-padding">
+	    <i class="fa fa-users fa-fw"></i><div id="mainlogo"></div></a>
+    </th:block>
+        <a th:href="@{${path}/item/list}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">상품 등록/구매</a>
+        <a th:href="@{${path}/cart/cartView}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">나의 장바구니</a>
+        <a th:href="@{${path}/chat/chat}" class="w3-bar-item w3-button w3-hide-small w3-hover-white">채팅</a>
+        <a th:href="@{${path}/chat/chatbot}" class="w3-bar-item w3-button w3-padding">
+            <i class="fa fa-eye fa-fw"></i> 챗봇</a>
+        <a th:href="@{${path}/naver/search}" class="w3-bar-item w3-button w3-padding">
+            <i class="fa fa-eye fa-fw"></i> 네이버검색</a>
+    </div>
+</div>
+
+<!-- 사이드바 -->
+<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
+        <i class="fa fa-remove"></i>
+    </a>
+    <!-- session.loginUser가 존재하지 않으면 userid에 접근할 수 없어 500 Internal Server Error 발생 -> th:if 혹은 논리연산자로 null 처리 -->
+    <h4 class="w3-bar-item"><b>반갑습니다  <span th:text="${session.loginUser != null} ? ${session.loginUser.userid} : '게스트'"></span> 님</h4>
+    <a class="w3-bar-item w3-button w3-hover-black" th:href="@{${path}/board/list(boardid=1)}">공지사항</a>
+    <a class="w3-bar-item w3-button w3-hover-black" th:href="@{${path}/board/list(boardid=2)}">자유게시판</a>
+    <a class="w3-bar-item w3-button w3-hover-black" th:href="@{${path}/board/list(boardid=3)}">QnA</a>
+</nav>
+
+<!-- 사이드 오버레이 -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- 메인 콘텐츠 -->
+<div class="w3-main" style="margin-left:250px">
+    <div class="w3-row w3-padding-64">
+    <!-- 메인콘텐츠 타임리프식 지정(sitemesh 부분읜 /body와 동일한 기능) -->
+	<div>
+	  <th:block th:replace="${content} ? ${content} : _"></th:block>
+	</div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="myFooter">
+        <div class="w3-container w3-theme-l2 w3-padding-32">
+            <h4>"최고의 품질로 모시겠습니다"</h4>
+        </div>
+        <div class="w3-container w3-theme-l1">
+            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+        </div>
+    </footer>
+</div>
+
+<!-- 스크립트 영역 (기존 JS 그대로 유지) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+<script th:inline="javascript">
+$(function(){
+ //	mainlogo();
+ //	getSido1();
+  //exchangeRate() // 수출입은행 환율정보 조회하기. 서버에서 HTML 형식(문자열)으로 리턴
+ //	exchangeRate2() //수출입은행 환율정보 조회하기. 서버에서 Map 형식(JSON)으로 리턴
+ //	piegraph(2) //글쓴이별 게시글 건수를 파이그래프로 출력
+ //	barlinegraph(2) //글쓴이별 게시글 건수를 선/막대 그래프로 출력
+	})
+function getSido1() {
+	$.ajax({
+		url : "/ajax/select1",
+		success : function(data) {
+			console.log(data)
+			let arr = data.substring(data.indexOf('[')+1, data.indexOf(']')).split(",");
+			$.each(arr,function(i,item){
+				$("select[name=si]").append(function(){
+					return "<option>" + item + "</option>" 
+				})
+	  		})
+	  	}
+	})
+}
+
+function getText(name) {
+	let city = $("select[name='si']").val();
+	let gu = $("select[name='gu']").val();
+	let disname;
+	let toptext = "구군을 선택하세요";
+	let params = "";
+	if(name == "si") {
+		params = "si=" + city.trim();
+		disname = "gu";
+	} else if (name == "gu") {
+		params = "si=" + city.trim() + "&gu=" + gu.trim();
+		disname = "dong";
+		toptext = "동리를 선택하세요";
+	} else {
+		return;
+	}
+	$.ajax({
+		url : "/ajax/select2",
+		type : "POST",
+		data : params,
+		success : function(arr) { //서버에서 배열 객체로 전달 받음
+			//서버에서 List 객체로 전달하는 경우, 클라이언트는 배열 객체로 받음
+			$("select[name="+disname+"] option").remove();
+			$("select[name="+disname+"]").append(function(){
+				return "<option value=''>"+ toptext + "</option>"
+			})
+			$.each(arr,function(i,item){
+				$("select[name="+disname+"]").append(function(){
+					return "<option>"+item+"</option>"
+				})
+			})
+		}
+		
+	})
+}
+function exchangeRate() {
+	$.ajax("/ajax/exchange1", {
+		success : function(data) {
+			console.log(data)
+			$("#exchange").html(data)
+		},
+		error : function(e) {
+			alert("환율 조회시 서버 오류 발생 :"+ e.status)
+		}
+	})
+}
+
+function exchangeRate2() {
+	$.ajax("/ajax/exchange2",{ // Map으로 데이터 수신
+		success : function(json) { //서버 Map 객체로 전송, 클라이언트:JSON 형식
+			console.log(json)
+			let html = 
+			"<h4 class='w3-center'>수출입은행<br>"+json.exdate+"</h4>";
+			html += "<table class='w3-table-all w3-margin-right'>"
+			html += "<tr><th>통화</th><th>기준율</th>"
+					+ "<th>받으실때</th><th>보내실때</th></tr>"
+			 //json.trlist : 4개의 배열 객체 저장
+			$.each(json.trlist, function(i, tds) { //tds : 8개의 문자열 배열
+				html +=
+				"<tr><td>"+tds[0]+"<br>"+tds[1]+"</td><td>"+tds[4]+"</td>"
+				+ "<td>"+tds[2]+"</td><td>"+tds[3]+"</td></tr>"
+			})
+			html += "</table>"
+			$("#exchange").html(html)
+		},
+		error : function(e) {
+			alert("환율 조회시 서버 오류 발생:"+ e.status)
+		}
+	})
+}
+//랜덤 컬러 뽑아주는 함수
+let randomColorFactor = function() {
+	return Math.round(Math.random() * 255)
+}
+let randomColor = function(opa) {
+	return "rgba(" + randomColorFactor() + ","
+				   + randomColorFactor() + ","
+				   + randomColorFactor() + ","
+				   + (opa || '.3') + ")"				   							
+}
+
+
+function piegraph(id) { //id 2: 자유게시판, 3:QnA
+	$.ajax("/ajax/graph1?id="+id,{
+		success : function(json) { // [...] : 배열.
+			let canvas = "<canvas id='canvas1' style='width:100%'></canvas>"
+			$("#piecontainer").html(canvas)
+			pieGraphPrint(json,id)
+		},
+		error : function(e) {
+			alert("서버오류:" + e.status)
+		}
+	})
+}
+function pieGraphPrint(arr,id) {
+	// arr = [{홍길동:10}, {김삿갓:7}, ...] (배열 안에 map 객체)
+	let colors = []
+	let writers = []
+	let datas = []
+	$.each(arr,function(index){
+		colors[index] = randomColor(0.5)
+		for(key in arr[index]) { //arr[0] : {홍길동:10}
+			writers.push(key) //글쓴이
+			datas.push(arr[index][key]) //게시판 등록 건수
+		}
+	})
+	let title = (id == 2) ? "자유게시판" : "QnA"
+	let config = {
+			type : 'pie',
+			data : {
+				datasets : [{ data:datas,
+							  backgroundColor : colors}],
+				labels : writers
+			},
+			options : {
+				responsive : true,
+				legend : {display:true, position:"right"},
+				title : {
+					display : true,
+					text : '글쓴이별 ' + title + " 등록 건수",
+					position : 'bottom'
+					}
+				}
+			}
+	let ctx = document.getElementById("canvas1")
+	new Chart(ctx,config)
+	}
+
+//메인로고 크롤링
+function mainlogo() {
+	$.ajax("/ajax/mainlogo", {
+		success : function(data) {
+			console.log(data)
+			$("#mainlogo").html(data);
+		},
+		error : function(e) {
+			alert("로고 불러오기 실패"+ e.status)
+		}
+	})
+}
+
+//막대그래프
+function barlinegraph(id) {
+	$.ajax("/ajax/graph2?id="+id,{
+		success : function(arr){
+			let canvas2 = "<canvas id='canvas2' style='width:100%'></canvas>"
+			$("#barcontainer").html(canvas2)
+			barlineGraphPrint(arr,id)
+		},
+		error : function(e) {
+			alert("서버오류 :" + e.status)
+		}
+	})
+}
+
+function barlineGraphPrint(arr,id) {
+	let colors= []
+	let regdates = []
+	let datas = []
+	$.each(arr, function(index){
+		colors[index] = randomColor(0.5)
+		for(key in arr[index]){
+			regdates.push(key)
+			datas.push(arr[index][key])
+		}
+	})
+	let title = (id==2) ? "자유게시판" : "QnA"
+	let config = {
+			type : 'bar',
+			data : {
+				datasets : [
+				{ type : "line",
+					boardWidth : 2,
+					borderColor : colors,
+					label : '건수',
+					fill : false,
+					data : datas
+					},
+				{type : "bar",
+				 backgroundColor : colors,
+				 label : '건수',
+				 data : datas
+				 }
+				],
+				labels : regdates,
+				},
+			options : {
+				responsive : true,
+				legend : {display:false},
+				title : {
+					display : true,
+					text : '최근 7일' + title + "등록건수",
+					position : 'bottom'
+				},
+				scales : {
+					xAxes : [{ display : true,
+							   scaleLabel : {
+								   display : true,
+								   labelString : "작성일자"
+							   }
+					}],
+				    yAxes : [{
+				    	scaleLabel : {
+				    		display : true,
+				    		labelString : "게시물 등록 건수"
+				    	},
+				    	ticks : {beginAtZero : true}
+				    }]
+				}
+			}
+	}
+	let ctx = document.getElementById("canvas2")
+	new Chart(ctx, config)
+}
+</script>
+
+</body>
+</html>

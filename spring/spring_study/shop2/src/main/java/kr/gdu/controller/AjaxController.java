@@ -1,5 +1,7 @@
 package kr.gdu.controller;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.gdu.service.BoardService;
+import kr.gdu.service.ChatBotService;
 /*
  * @Controller : @Component + Controller 기능
  * 		Mapping 메서드의 리턴 타입 : ModelAndView : 뷰이름 + 데이터
@@ -29,6 +33,8 @@ import kr.gdu.service.BoardService;
 public class AjaxController {
 	@Autowired
 	BoardService service;
+	@Autowired
+	ChatBotService chatService;
 	
 	//produces="text/plain; charset=utf-8" : 전송될 데이터 형식
 	@PostMapping(value="uploadImage", produces="text/plain; cahrset=utf-8")
@@ -85,5 +91,17 @@ public class AjaxController {
 	@RequestMapping(value="mainlogo", produces="text/html; charset=utf-8")
 	public String mainlogo() {
 		return service.mainlogo();
+	}
+	
+	@PostMapping("gptquestion")
+	public String gptquestion(String question) {
+		String response = null;
+		try {
+			response = chatService.getChatGPTResponse(question);
+		} catch (URISyntaxException | IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println(response);
+		return response;
 	}
 }

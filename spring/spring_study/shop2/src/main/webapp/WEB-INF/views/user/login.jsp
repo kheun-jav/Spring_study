@@ -13,7 +13,7 @@
 	function win_open(page){
 		var op = "width=500, height=350, left=50, top=150";
 		open(page,"",op);
-	}
+	}	
 </script>
 </head>
 <body>

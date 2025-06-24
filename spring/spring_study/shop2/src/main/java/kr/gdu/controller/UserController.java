@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -113,7 +115,9 @@ public class UserController {
 		}
 		return mav;
 	}
-	
+	/*
+	 * 1. /WEB-INF/views/user/login.jsp 페이지 출력
+	 */
 	//네이버 로그인
 	@GetMapping("login")
 	public ModelAndView loginForm(HttpSession session) {
@@ -122,6 +126,7 @@ public class UserController {
 		clientId="2LWNeMJ23ono0FBEiYK8";
 		String redirectURI = null;
 		try {
+			//콜백URL 설정 => 네이버에서 정상처리로 결정되면 호출해주는 URL
 			redirectURI = URLEncoder.encode
 					("http://localhost:8080/user/naverlogin", "utf-8");
 		} catch(UnsupportedEncodingException e) {
@@ -190,16 +195,17 @@ public class UserController {
 		} catch(Exception e) {
 			System.out.println(e);		
 		}
+		//네이버의 응답 형식 : JSON 형식
 		//JSON 형태의 문자열 데이터 => json 객체로 변경하기 위한 객체 생성
-		JSONParser parser = new JSONParser();
+		JSONParser parser = new JSONParser(); //pom.xml에 추가
 		JSONObject json = null;
 		try {
 			json = (JSONObject)parser.parse(res.toString());
 		} catch(ParseException e) {
 			e.printStackTrace();
 		}
-		String token = (String)json.get("access_token");
-		String header = "Bearer " + token;
+		String token = (String)json.get("access_token"); //네이버가 전달해준 토큰
+		String header = "Bearer " + token; //한개의 공백 필요
 		try {
 			apiURL = "https://openapi.naver.com/v1/nid/me";
 			URL url = new URL(apiURL);
@@ -231,9 +237,9 @@ public class UserController {
 			throw new ShopException("네이버 로그인시 오류 발생", "login");
 		}
 		JSONObject jsondetail = (JSONObject)json.get("response");
-		String userid = jsondetail.get("id").toString();
-		User user = service.selectUser(userid);
-		if(user == null) {
+		String userid = jsondetail.get("id").toString(); //네이버에서 전달해준 ID
+		User user = service.selectUser(userid);//
+		if(user == null) { //처음 로그인한 경우
 			user = new User();
 			user.setUserid(userid);
 			user.setUsername(jsondetail.get("name").toString());
@@ -264,9 +270,9 @@ public class UserController {
 	}
 	//로그아웃
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, Model model) {
 		session.invalidate();
-		return "redirect:login";
+	    return "redirect:login";
 	}
 	//로그인 상태, 본인정보만 조회 검증 => AOP 클래스(UserLoginAspect.userIdCheck()s
 	@RequestMapping({"update","delete"})

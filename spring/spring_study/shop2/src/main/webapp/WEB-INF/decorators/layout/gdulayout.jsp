@@ -47,6 +47,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <a href="${path}/item/list" class="w3-bar-item w3-button w3-hide-small w3-hover-white">상품 등록/구매</a>
     <a href="${path}/cart/cartView" class="w3-bar-item w3-button w3-hide-small w3-hover-white">나의 장바구니</a>
 	<a href="${path}/chat/chat" class="w3-bar-item w3-button w3-hide-small w3-hover-white">채팅</a>
+	<a href="${path}/chat/chatbot" class="w3-bar-item w3-button w3-padding">
+   	<i class="fa fa-eye fa-fw"></i> 챗봇
+	</a>
+	<a href="${path}/naver/search" class="w3-bar-item w3-button w3-padding">
+	 <i class="fa fa-eye fa-fw"></i>&nbsp;네이버검색</a>
   </div>
   </div>
 </div>
@@ -73,8 +78,9 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 	 	  <sitemesh:write property="body"/>
 		</div>
 	</div>
+	<hr>
     <%-- 수출입은행 환율 정보 표시 영역 --%>
-  <div style="width:100%;">
+ <div style="width:100%;">
   	<div id="exchange" style="width:70%; margin: 6px;"></div>
   </div>
   <%-- 게시판 추이 파이그래프 --%>
