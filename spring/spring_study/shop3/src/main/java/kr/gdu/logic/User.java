@@ -1,0 +1,40 @@
+package kr.gdu.logic;
+
+import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+
+@Data
+public class User {
+	@Id
+	@Size(min=3, max=10, message="이이디는 3자이상 10자이하로 입력하세요.")
+	private String userid;
+	@Transient
+	private String channel;
+	@Size(min=3, max=10, message="비밀번호는 3자이상 10자이하로 입력하세요.")
+	private String password;
+	@NotEmpty(message="사용자이름은 필수 입니다.") //필수 입력
+	private String username;
+	private String phoneno;
+	private String postcode;
+	private String address;
+	@NotEmpty(message="email을 입력하세요")
+	@Email(message="email 형식으로 입력하세요")
+	private String email;
+//	@NotNull(message="생일을 입력하세요") //필수 입력
+	@Past(message="생일은 과거 날짜만 가능합니다.")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date birthday;
+}
